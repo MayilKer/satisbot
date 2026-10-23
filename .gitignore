@@ -1,0 +1,20 @@
+# Виртуальное окружение
+.venv/
+
+# Кэш Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Секреты — никогда в Git!
+.env
+
+# Настройки PyCharm и macOS
+.idea/
+.DS_Store
+
+# Логи
+*.log
+
+# Сырые данные scraping (могут быть большими)
+scraper/raw/
