@@ -1,14 +1,24 @@
+from contextlib import asynccontextmanager
+
 import redis
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from qdrant_client import QdrantClient
-from sqlalchemy import create_engine, text
+from sqlalchemy import text
 
 from app.config import settings
+from app.db import models  # noqa: F401 — регистрирует модели в Base.metadata
+from app.db.session import Base, engine
 
-app = FastAPI(title="SatışBot API", version="0.1.0")
 
-engine = create_engine(settings.database_url, pool_pre_ping=True)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    Base.metadata.create_all(engine)
+    yield
+
+
+app = FastAPI(title="SatışBot API", version="0.1.0", lifespan=lifespan)
+
 redis_client = redis.Redis.from_url(settings.redis_url)
 qdrant = QdrantClient(url=settings.qdrant_url)
 
