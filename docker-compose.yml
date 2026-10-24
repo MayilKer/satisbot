@@ -28,7 +28,7 @@ services:
       retries: 10
 
   qdrant:
-    image: qdrant/qdrant:latest
+    image: qdrant/qdrant:v1.18.2
     container_name: satisbot-qdrant
     ports:
       - "6333:6333"
@@ -45,7 +45,22 @@ services:
       - TZ=Asia/Baku
     volumes:
       - n8n_data:/home/node/.n8n
-
+  api:
+    build: ./api
+    container_name: satisbot-api
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api/app:/code/app          # код с Mac сразу виден в контейнере
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      qdrant:
+        condition: service_started
 volumes:
   pgdata:
   qdrant_data:
