@@ -53,6 +53,7 @@ services:
       - "8000:8000"
     volumes:
       - ./api/app:/code/app          # код с Mac сразу виден в контейнере
+      - ./scraper:/code/scraper      # адаптеры и импорт используют модели из app
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
       postgres:

@@ -3,12 +3,14 @@ from sqlalchemy import select
 from app.db.models import Store
 from app.db.session import Base, SessionLocal, engine
 
-DARAQ = {
-    "name": "Daraq Store",
-    "source_type": "shopify",
-    "source_url": "https://daraq.store",
+MARTHOUSE = {
+    "name": "Marthouse",
+    "source_type": "mssql",
+    "source_url": "MARTHOUSE_DB_URL",  # имя переменной окружения, пароль — только в .env
     "attribute_schema": {
-        "volume_ml": {"type": "number", "label_az": "həcm (ml)", "label_ru": "объём (мл)"},
+        "concentration": {"type": "enum", "values": ["EDP", "EDT", "EDC"], "label_ru": "концентрация"},
+        "gender": {"type": "enum", "values": ["female", "male", "unisex"], "label_ru": "для кого"},
+        "release_year": {"type": "number", "label_ru": "год выпуска"},
     },
     "languages": ["az", "ru"],
 }
@@ -17,8 +19,8 @@ DARAQ = {
 def main():
     Base.metadata.create_all(engine)
     with SessionLocal() as db:
-        if not db.scalar(select(Store).where(Store.name == DARAQ["name"])):
-            db.add(Store(**DARAQ))
+        if not db.scalar(select(Store).where(Store.name == MARTHOUSE["name"])):
+            db.add(Store(**MARTHOUSE))
             db.commit()
             print("Store created")
         else:
