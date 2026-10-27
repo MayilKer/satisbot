@@ -1,0 +1,98 @@
+store: Marthouse
+demo: true  # ДЕМО-ответы для портфолио. Перед реальным запуском замени на настоящие условия магазина!
+items:
+  - category: delivery
+    ru:
+      q: Как работает доставка по Баку? Сколько стоит и сколько ждать?
+      a: Доставка по Баку — в течение 1 рабочего дня после заказа. Стоимость 5 AZN, при заказе от 100 AZN доставка бесплатная.
+    az:
+      q: Bakı daxilində çatdırılma necədir? Qiyməti və müddəti nə qədərdir?
+      a: Bakı daxilində çatdırılma sifarişdən sonra 1 iş günü ərzində həyata keçirilir. Çatdırılma 5 AZN-dir, 100 AZN-dən yuxarı sifarişlərdə isə pulsuzdur.
+
+  - category: delivery
+    ru:
+      q: Доставляете ли вы в регионы Азербайджана?
+      a: Да, доставляем во все регионы Азербайджана. Доставка занимает 2–4 рабочих дня, стоимость от 7 до 12 AZN в зависимости от региона.
+    az:
+      q: Azərbaycanın bölgələrinə çatdırılma varmı?
+      a: Bəli, Azərbaycanın bütün bölgələrinə çatdırırıq. Çatdırılma 2–4 iş günü çəkir, qiyməti bölgədən asılı olaraq 7–12 AZN arasındadır.
+
+  - category: payment
+    ru:
+      q: Какие способы оплаты вы принимаете?
+      a: Оплатить можно курьеру наличными или картой, а также онлайн-переводом на карту.
+    az:
+      q: Hansı ödəniş üsulları mövcuddur?
+      a: Ödənişi kuryerə nağd və ya kartla, həmçinin onlayn kart köçürməsi ilə edə bilərsiniz.
+
+  - category: payment
+    ru:
+      q: Можно ли купить в рассрочку?
+      a: Да, возможна рассрочка на 3 и 6 месяцев по картам рассрочки банков-партнёров. Подробности уточнит менеджер.
+    az:
+      q: Hissə-hissə ödənişlə almaq olarmı?
+      a: Bəli, partnyor bankların taksit kartları ilə 3 və 6 aylıq hissə-hissə ödəniş mümkündür. Ətraflı məlumatı menecerimiz verəcək.
+
+  - category: authenticity
+    ru:
+      q: Ваши духи оригинальные?
+      a: Да, все наши ароматы оригинальные и закупаются у официальных дистрибьюторов. По запросу можем показать документы на товар.
+    az:
+      q: Ətirləriniz orijinaldırmı?
+      a: Bəli, bütün ətirlərimiz orijinaldır və rəsmi distribyutorlardan alınır. İstəyə görə məhsulun sənədlərini təqdim edə bilərik.
+
+  - category: returns
+    ru:
+      q: Можно ли вернуть или обменять духи?
+      a: Товар в нераспечатанной упаковке с сохранённым целлофаном можно вернуть или обменять в течение 14 дней после покупки. Вскрытые ароматы по гигиеническим причинам не принимаются.
+    az:
+      q: Ətri geri qaytarmaq və ya dəyişdirmək olarmı?
+      a: Qablaşdırması açılmamış və selofanı qorunmuş məhsulu alışdan sonra 14 gün ərzində qaytarmaq və ya dəyişdirmək olar. Gigiyena səbəbindən açılmış ətirlər geri qəbul edilmir.
+
+  - category: samples
+    ru:
+      q: Есть ли тестеры или пробники, можно ли попробовать аромат перед покупкой?
+      a: Да, в нашем магазине можно попробовать ароматы на тестерах. Для некоторых ароматов есть маленькие пробники — наличие уточните у менеджера.
+    az:
+      q: Tester və ya nümunə varmı, almadan əvvəl ətri yoxlamaq olarmı?
+      a: Bəli, mağazamızda ətirləri testerlə yoxlaya bilərsiniz. Bəzi ətirlərin kiçik nümunələri də var, mövcudluğunu menecerdən soruşun.
+
+  - category: gift
+    ru:
+      q: Можно ли заказать подарочную упаковку?
+      a: Да, подарочная упаковка бесплатная. Просто укажите это при оформлении заказа.
+    az:
+      q: Hədiyyə qablaşdırması sifariş etmək olarmı?
+      a: Bəli, hədiyyə qablaşdırması pulsuzdur. Sifariş zamanı bunu qeyd etməyiniz kifayətdir.
+
+  - category: contacts
+    ru:
+      q: Какой у вас режим работы и как с вами связаться?
+      a: Работаем ежедневно с 10:00 до 21:00. Связаться можно через этого бота, WhatsApp или по телефону +994 XX XXX XX XX.
+    az:
+      q: İş saatlarınız necədir və sizinlə necə əlaqə saxlamaq olar?
+      a: Hər gün saat 10:00-dan 21:00-dək işləyirik. Bizimlə bu bot, WhatsApp və ya +994 XX XXX XX XX nömrəsi vasitəsilə əlaqə saxlaya bilərsiniz.
+
+  - category: pickup
+    ru:
+      q: Есть ли у вас магазин, можно ли забрать заказ самому?
+      a: Да, заказ можно забрать самостоятельно в нашем магазине по адресу [адрес]. Перед визитом мы подтвердим, что заказ готов.
+    az:
+      q: Mağazanız varmı, sifarişi özüm götürə bilərəmmi?
+      a: Bəli, sifarişi [ünvan] ünvanındakı mağazamızdan özünüz götürə bilərsiniz. Gəlməzdən əvvəl sifarişin hazır olduğunu təsdiqləyəcəyik.
+
+  - category: consultation
+    ru:
+      q: Поможете подобрать аромат в подарок?
+      a: Конечно! Напишите, для кого выбираете подарок, какие ароматы этот человек любит и какой у вас бюджет — предложим подходящие варианты.
+    az:
+      q: Hədiyyə üçün ətir seçməyə kömək edə bilərsinizmi?
+      a: Əlbəttə! Hədiyyəni kimin üçün seçdiyinizi, onun sevdiyi ətirləri və büdcənizi yazın, uyğun variantlar təklif edəcəyik.
+
+  - category: discounts
+    ru:
+      q: Есть ли сейчас скидки или акции?
+      a: Товары со скидкой отмечены в каталоге — рядом с новой ценой указана старая. Чтобы узнавать о новых акциях, напишите нашему менеджеру.
+    az:
+      q: Hazırda endirim və ya aksiya varmı?
+      a: Endirimli məhsullar kataloqda köhnə qiymətlə birlikdə göstərilir. Yeni aksiyalardan xəbərdar olmaq üçün menecerimizə yazın.
