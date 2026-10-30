@@ -13,15 +13,18 @@ PRODUCTS_SQL = text("""
     JOIN dbo.Brands b ON b.Id = p.BrandId
     ORDER BY p.Id
 """)
-
-# TODO: подставь реальные имена колонок из проверки в пункте 0
 IMAGES_SQL = text("SELECT ProductId, ImageUrl FROM dbo.ProductImages ORDER BY ProductId, Id")
 
-CONCENTRATION = [
-    ("парфюмерная вода", "EDP"),
-    ("туалетная вода", "EDT"),
-    ("одеколон", "EDC"),
+CONCENTRATION_RULES = [
+    # порядок важен: "eau de parfum" содержит "parfum", поэтому EDP проверяем раньше Parfum
+    (re.compile(r"eau de parfum|\bedp\b|парфюмерная вода|парфюмированная вода"), "EDP"),
+    (re.compile(r"eau de toilette|\bedt\b|туалетная вода"), "EDT"),
+    (re.compile(r"eau de cologne|\bedc\b|одеколон"), "EDC"),
+    (re.compile(r"\bextrait\b|\ble parfum\b|\bparfum\b|экстракт духов"), "Parfum"),
 ]
+UNISEX_RE = re.compile(r"унисекс|для (?:мужчин и женщин|женщин и мужчин)|для него и для не[её]|\bunisex\b")
+FEMALE_RE = re.compile(r"женск|дамск|для женщин|для не[её]\b|\bfor her\b|\bpour femme\b|\bwoman\b|\bher\b")
+MALE_RE = re.compile(r"мужск|для мужчин|для него\b|джентльмен|\bfor him\b|\bpour homme\b|\bman\b|\bhim\b|\bgentleman\b")
 YEAR_RE = re.compile(r"в (\d{4}) году")
 SPACES_RE = re.compile(r"[ \t]+")
 
@@ -31,6 +34,29 @@ def clean(value: str | None) -> str | None:
         return None
     value = SPACES_RE.sub(" ", value).strip()
     return value or None
+
+
+def detect_concentration(title: str, description: str) -> str | None:
+    for txt in (title.lower(), description.lower()):  # название надёжнее описания
+        for pattern, code in CONCENTRATION_RULES:
+            if pattern.search(txt):
+                return code
+    return None
+
+
+def detect_gender(title: str, description: str) -> str | None:
+    for txt in (title.lower(), description.lower()):  # сначала название, потом описание
+        if UNISEX_RE.search(txt):
+            return "unisex"
+        female, male = FEMALE_RE.search(txt), MALE_RE.search(txt)
+        if female and male:
+            # упомянуты оба — побеждает то, что встречается раньше
+            return "female" if female.start() < male.start() else "male"
+        if female:
+            return "female"
+        if male:
+            return "male"
+    return None
 
 
 class MssqlAdapter(CatalogAdapter):
@@ -67,23 +93,13 @@ class MssqlAdapter(CatalogAdapter):
 
     @staticmethod
     def _attributes(name: str, description: str) -> dict:
-        text_lower = f"{name} {description}".lower()
         attrs: dict = {}
-        # TODO: concentration — первое совпадение из CONCENTRATION, которое встречается в text_lower
-        for phrase, code in CONCENTRATION:
-            if phrase in text_lower:
-                attrs["concentration"] = code
-                break
-
-        unisex = ("унисекс", "для женщин и мужчин", "для мужчин и женщин")
-        if any(phrase in text_lower for phrase in unisex):
-            attrs["gender"] = "unisex"
-        elif "для женщин" in text_lower:
-            attrs["gender"] = "female"
-        elif "для мужчин" in text_lower:
-            attrs["gender"] = "male"
-
-        # TODO: release_year — YEAR_RE.search(description) → int(match.group(1))
+        concentration = detect_concentration(name, description)
+        if concentration:
+            attrs["concentration"] = concentration
+        gender = detect_gender(name, description)
+        if gender:
+            attrs["gender"] = gender
         match = YEAR_RE.search(description)
         if match:
             attrs["release_year"] = int(match.group(1))
