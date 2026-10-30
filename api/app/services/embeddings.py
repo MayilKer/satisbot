@@ -6,7 +6,7 @@ from voyageai.error import RateLimitError
 from app.config import settings
 
 _client = voyageai.Client(api_key=settings.voyage_api_key)
-BATCH = 32  # небольшие пачки, чтобы не упираться в лимиты бесплатного аккаунта
+BATCH = 128
 
 
 def _embed(texts: list[str], model: str, input_type: str) -> list[list[float]]:
