@@ -1,0 +1,42 @@
+# known-item search: у каждого запроса один правильный товар
+- target: "Jo Malone Wild Bluebell"
+  az: "erkən yazda meşəni xatırladan təravətli yaşıl-çiçəkli qadın ətri"
+  ru: "свежий зелёно-цветочный женский аромат, напоминающий весенний лес"
+
+- target: "Lattafa Khamrah Dukhan"
+  az: "tüstü və buxur qoxulu şərq üslubunda uniseks ətir"
+  ru: "восточный унисекс-аромат с запахом дыма и благовоний"
+
+- target: "Kilian A Kiss From A Rose"
+  az: "zərif qızılgül ətirli qadın parfümü"
+  ru: "женский парфюм с нежным ароматом розы"
+
+- target: "Tiziana Terenzi XIX March"
+  az: "kişilər və qadınlar üçün təravətli odunsu-fujer ətir"
+  ru: "свежий древесно-фужерный аромат для мужчин и женщин"
+
+- target: "Roja Dove Apex Eau Intense"
+  az: "nanə və sitrus notları ilə başlayan, dəri və ənbər bazalı güclü şipr uniseks ətir"
+  ru: "мощный шипровый унисекс-аромат: начинается с мяты и цитрусов, в базе кожа и амбра"
+
+- target: "Amouage Epic For Woman"
+  az: "Şərqin sirli ab-havasını daşıyan zərif şərq üslubunda qadın ətri"
+  ru: "утончённый восточный женский аромат с загадочной атмосферой Востока"
+
+- target: "AMOUAGE GUIDANCE BODY LOTION"
+  az: "dərini nəmləndirən, yağlı iz qoymayan, armud, fındıq və vanil qoxulu bədən losyonu"
+  ru: "лёгкий увлажняющий лосьон для тела без жирного блеска, с запахом груши, фундука и ванили"
+
+- target: "Amouage Imitation For Woman"
+  az: "ilanq-ilanq, ballı qızılgül və yasəmən notlu çiçəkli-şipr qadın ətri"
+  ru: "цветочно-шипровый женский аромат с иланг-илангом, медовой розой и жасмином"
+
+- target: "Banderas Queen Of Seduction"
+  az: "yaşıl bağın təravətini xatırladan, yay üçün yüngül çiçəkli-yaşıl qadın ətri, hədiyyə üçün"
+  ru: "лёгкий летний цветочно-зелёный женский аромат, напоминающий свежий сад, подойдёт в подарок"
+
+- target: "Ard Al Zaafaran Mousuf Ramadi"
+  az: "əsas notu zəfəran olan isti şərq ətri"
+  ru: "жаркий восточный аромат, где главная нота — шафран"
+
+# TODO: ещё 6 товаров в том же формате
