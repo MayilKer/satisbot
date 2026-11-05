@@ -5,6 +5,8 @@ from voyageai.error import RateLimitError
 
 from app.config import settings
 
+from app.services.cache import get_json, make_key, normalize, set_json
+
 _client = voyageai.Client(api_key=settings.voyage_api_key)
 BATCH = 128
 
@@ -29,4 +31,11 @@ def embed_documents(texts: list[str], model: str | None = None) -> list[list[flo
 
 
 def embed_query(text: str, model: str | None = None) -> list[float]:
-    return _embed([text], model or settings.embedding_model, "query")[0]
+    model = model or settings.embedding_model
+    key = make_key(f"emb:{model}", normalize(text))  # модель в ключе: другая модель — другие векторы
+    cached = get_json(key)
+    if cached is not None:
+        return cached
+    vector = _embed([text], model, "query")[0]
+    set_json(key, vector, ttl=24 * 3600)
+    return vector
