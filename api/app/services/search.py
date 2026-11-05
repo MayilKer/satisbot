@@ -12,17 +12,23 @@ from app.services.vectors import PRODUCTS, client
 SEARCH_TTL = 600  # 10 минут
 
 
+def allowed_or_unknown(key: str, values: list[str]) -> models.Filter:
+    """Значение из списка ИЛИ атрибут не определён (NULL) — такие товары не прячем."""
+    return models.Filter(should=[
+        models.FieldCondition(key=key, match=models.MatchAny(any=values)),
+        models.IsNullCondition(is_null=models.PayloadField(key=key)),
+    ])
+
+
 def build_filter(store_id: int, f: SearchFilters) -> models.Filter:
     must = [models.FieldCondition(key="store_id", match=models.MatchValue(value=store_id))]
     if f.in_stock_only:
         must.append(models.FieldCondition(key="in_stock", match=models.MatchValue(value=True)))
     if f.concentration:
-        must.append(models.FieldCondition(key="concentration", match=models.MatchValue(value=f.concentration)))
+        must.append(allowed_or_unknown("concentration", [f.concentration]))
     if f.gender:
-        if f.include_unisex and f.gender != "unisex":
-            must.append(models.FieldCondition(key="gender", match=models.MatchAny(any=[f.gender, "unisex"])))
-        else:
-            must.append(models.FieldCondition(key="gender", match=models.MatchValue(value=f.gender)))
+        genders = [f.gender, "unisex"] if f.include_unisex and f.gender != "unisex" else [f.gender]
+        must.append(allowed_or_unknown("gender", genders))
     if f.min_price is not None or f.max_price is not None:
         must.append(models.FieldCondition(key="price_azn", range=models.Range(gte=f.min_price, lte=f.max_price)))
     return models.Filter(must=must)

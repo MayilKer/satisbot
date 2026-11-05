@@ -2,8 +2,10 @@ import argparse
 from pathlib import Path
 
 import yaml
+from langchain_core.messages import HumanMessage
 from sqlalchemy import select
 
+from app.agent.understand import build_understand_chain
 from app.db.models import Product, Store
 from app.db.session import SessionLocal
 from app.schemas.search import SearchFilters
@@ -54,6 +56,24 @@ def main():
                     recall = sum(1 for r in ranks if r is not None) / n
                     mrr = sum(1 / r if r is not None else 0 for r in ranks) / n
                 print(f"{mode:<16} {lang:<5} {recall:>9.2f} {mrr:>6.2f}")
+        # Режим 3: настоящий конвейер — understand переводит AZ → RU и извлекает фильтры
+        chain = build_understand_chain(store.attribute_schema)
+        ranks = []
+        for g in golden:
+            u = chain.invoke({"messages": [HumanMessage(content=g["az"])]})
+            pipeline_filters = SearchFilters(in_stock_only=False, **u.filters.model_dump())
+            query = u.search_query_ru or g["az"]
+            hits = search_products(db, store.id, query, pipeline_filters, k=K, use_rerank=True)
+            ids = [h.product_id for h in hits]
+            target_id = titles[g["target"]]
+            rank = ids.index(target_id) + 1 if target_id in ids else None
+            ranks.append(rank)
+            if rank is None:
+                print(f"   ✗ [az→ru] «{g['az']}» → «{query}» {u.filters.model_dump(exclude_none=True)}")
+        recall = sum(1 for r in ranks if r is not None) / len(ranks)
+        mrr = sum(1 / r if r is not None else 0 for r in ranks) / len(ranks)
+        print(f"{'AZ→RU+rerank':<16} {'az':<5} {recall:>9.2f} {mrr:>6.2f}")
+
 
 if __name__ == "__main__":
     main()

@@ -9,3 +9,5 @@ httpx
 beautifulsoup4
 pymssql
 voyageai
+langchain-anthropic
+langchain-core
