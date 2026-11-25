@@ -24,3 +24,4 @@ class ProductHit(BaseModel):
     concentration: str | None
     image_url: str | None
     score: float
+    description_snippet: str | None = None

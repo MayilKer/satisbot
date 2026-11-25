@@ -48,6 +48,7 @@ def to_hit(p: Product, score: float) -> ProductHit:
         concentration=attrs.get("concentration"),
         image_url=(p.image_urls or [None])[0],
         score=score,
+        description_snippet=(p.description or "")[:400] or None,
     )
 
 

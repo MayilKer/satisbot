@@ -11,3 +11,7 @@ pymssql
 voyageai
 langchain-anthropic
 langchain-core
+langgraph
+langgraph-checkpoint-postgres
+psycopg[binary]
+psycopg-pool
